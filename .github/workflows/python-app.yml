@@ -24,7 +24,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASS docker.io
     - name: heroku login
       env:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: "fierce-reef-97096"
         heroku_email: "kumar2001kapilm@gmail.com"
       run: |
