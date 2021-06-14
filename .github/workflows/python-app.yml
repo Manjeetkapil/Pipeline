@@ -21,7 +21,7 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
       run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASS
+        docker login -u $DOCKER_USER -p $DOCKER_PASS docker.io
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -42,5 +42,5 @@ jobs:
         python -m pytest -v
     - name: Docker process
       run: |
-        docker build -f Dockerfile -t try:latest .
-        docker push try:latest
+        docker build -f Dockerfile -t manjeetkapil/image:latest .
+        docker push manjeetkapil/image:latest
