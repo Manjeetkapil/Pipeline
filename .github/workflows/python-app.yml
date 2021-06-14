@@ -42,5 +42,5 @@ jobs:
         python -m pytest -v
     - name: Docker process
       run: |
-        docker build -f Dockerfile -t latest .
-        docker push latest
+        docker build -f Dockerfile -t try:latest .
+        docker push try:latest
