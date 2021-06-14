@@ -49,6 +49,8 @@ jobs:
       run: |
         python -m pytest -v
     - name: Docker process
+      env:
+        heroku_app_name: ${{ secrets.HEROKU_APP }}
       run: |
         docker build -f Dockerfile -t manjeetkapil/image:latest .
         docker push manjeetkapil/image:latest
