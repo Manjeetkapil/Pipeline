@@ -22,14 +22,6 @@ jobs:
         DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASS docker.io
-    - name: heroku login
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP }}
-        heroku_email: "kumar2001kapilm@gmail.com"
-      run: |
-        wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-        heroku container:login
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -50,9 +42,13 @@ jobs:
         python -m pytest -v
     - name: Docker process
       env:
-        heroku_app_name: ${{ secrets.HEROKU_APP }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP }}
+        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
       run: |
         docker build -f Dockerfile -t manjeetkapil/image:latest .
         docker push manjeetkapil/image:latest
-        heroku container:push web --app $heroku_app_name
-        heroku container:release web --app $heroku_app_name
+        wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+        heroku container:login
+        heroku container:push web --app $HEROKU_APP_NAME
+        heroku container:release web --app $HEROKU_APP_NAME
