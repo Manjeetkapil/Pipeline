@@ -25,7 +25,7 @@ jobs:
     - name: heroku login
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: "fierce-reef-97096"
+        heroku_app_name: ${{ secrets.HEROKU_APP }}
         heroku_email: "kumar2001kapilm@gmail.com"
       run: |
         wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
@@ -52,5 +52,5 @@ jobs:
       run: |
         docker build -f Dockerfile -t manjeetkapil/image:latest .
         docker push manjeetkapil/image:latest
-        heroku container:push web --app fierce-reef-97096
-        heroku container:release web --app fierce-reef-97096
+        heroku container:push web --app $heroku_app_name
+        heroku container:release web --app $heroku_app_name
