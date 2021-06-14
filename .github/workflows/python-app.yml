@@ -22,6 +22,14 @@ jobs:
         DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASS docker.io
+    - name: heroku login
+      env:
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: "fierce-reef-97096"
+        heroku_email: "kumar2001kapilm@gmail.com"
+      run: |
+        wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+        heroku container:login
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -44,3 +52,5 @@ jobs:
       run: |
         docker build -f Dockerfile -t manjeetkapil/image:latest .
         docker push manjeetkapil/image:latest
+        heroku container:push web --app fierce-reef-97096
+        heroku container:release web --app fierce-reef-97096
